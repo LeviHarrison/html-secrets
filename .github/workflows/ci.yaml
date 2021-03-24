@@ -4,7 +4,7 @@ on: [ push, pull_request ]
 
 jobs:
 
-  build/compile-html:
+  build-compile-html:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -19,7 +19,7 @@ jobs:
     - name: build
       run: go build -v ./cmd/compile-html
   
-  test/go:
+  test-go:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
