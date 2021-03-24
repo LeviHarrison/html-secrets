@@ -1,14 +1,9 @@
-const { spawn } = require("child_process");
-const compiler = spawn("./compile-html");
+#!/usr/bin/env node
 
-compiler.stdout.on("data", (data) => {
-  console.log(data.toString());
-});
+const { Binary } = require("binary-install");
+const compiler = new Binary(
+  "https://raw.githubusercontent.com/LeviHarrison/html-secrets/compiler-html",
+  { name: "compile-html" }
+);
 
-compiler.on("error", (error) => {
-  console.log(error.message);
-});
-
-compiler.on("close", (code) => {
-  console.log(`Compiler exited with code ${code}`);
-});
+compiler.run();
