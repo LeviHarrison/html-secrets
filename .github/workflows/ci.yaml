@@ -1,35 +1,34 @@
 name: ci
 
-on: [ push, pull_request ]
+on: [push, pull_request]
 
 jobs:
-
   build-compile-html:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - uses: actions/setup-go@v2
-      with:
-        go-version: 1.15
+      - uses: actions/setup-go@v2
+        with:
+          go-version: 1.15
 
-    - name: build
-      run: go build -v ./cmd/compile-html
-  
+      - name: build
+        run: go build -v ./cmd/compile-html
+
   test-go:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - uses: actions/setup-go@v2
-      with:
-        go-version: 1.15
+      - uses: actions/setup-go@v2
+        with:
+          go-version: 1.15
 
-    - name: test
-      run: go test -v ./...
+      - name: test
+        run: go test -v ./...

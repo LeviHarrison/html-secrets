@@ -1,0 +1,46 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - "main"
+    tags:
+      - "*"
+
+jobs:
+  build_release-compile-html:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-go@v2
+        with:
+          go-version: 1.15
+
+      - name: build
+        run: go build -v ./cmd/compile-html
+
+      - name: upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: compile-html-${{ matrix.os }}
+          path: ./compile-html*
+
+  release:
+    if: success()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: compile-html-ubuntu-latest
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: compile-html-windows-latest
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: compile-html-macos-latest
